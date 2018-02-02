@@ -137,7 +137,7 @@ void Mostrarelogio(int input)
       secondsToON = 60 - segundos;
       lcd.setCursor(4, 0);
       lcd.print("LIGA EM:");
-      lcd.setCursor(5, 1);
+      lcd.setCursor(4, 1);
       if (hoursToON < 10) {
         lcd.print("0");
         lcd.print(hoursToON);
