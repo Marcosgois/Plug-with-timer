@@ -4,7 +4,7 @@
 
 LiquidCrystal lcd(12, 11, 5, 4, 3, 6);
 byte zero = 0x00;
-int rele = 7;
+int rele = 10;
 void setup()
 {
   lcd.begin(16, 2);
@@ -14,7 +14,7 @@ void setup()
   pinMode(rele, OUTPUT);
   Serial.begin(9600);
   //A linha abaixo pode ser retirada apos setar a data e hora
-  //SelecionaDataeHora();
+  SelecionaDataeHora();
 }
 
 void loop()
@@ -34,13 +34,13 @@ void loop()
 
 void SelecionaDataeHora()   //Seta a data e a hora do DS1307
 {
-  byte segundos = 40; //Valores de 0 a 59
-  byte minutos = 59; //Valores de 0 a 59
-  byte horas = 23; //Valores de 0 a 23
+  byte segundos = 10; //Valores de 0 a 59
+  byte minutos = 03; //Valores de 0 a 59
+  byte horas = 03; //Valores de 0 a 23
   byte diadasemana = 1; //Valores de 0 a 6 - 0=Domingo, 1 = Segunda, etc.
-  byte diadomes = 17; //Valores de 1 a 31
-  byte mes = 4; //Valores de 1 a 12
-  byte ano = 13; //Valores de 0 a 99
+  byte diadomes = 5; //Valores de 1 a 31
+  byte mes = 2; //Valores de 1 a 12
+  byte ano = 18; //Valores de 0 a 99
   Wire.beginTransmission(DS1307_ADDRESS);
   Wire.write(zero); //Stop no CI para que o mesmo possa receber os dados
 
