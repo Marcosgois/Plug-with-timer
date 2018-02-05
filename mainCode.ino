@@ -4,13 +4,14 @@
 
 LiquidCrystal lcd(12, 11, 5, 4, 3, 6);
 byte zero = 0x00;
-
+int rele = 7;
 void setup()
 {
   lcd.begin(16, 2);
   Wire.begin();
   pinMode(A3, OUTPUT);
   analogWrite(A3, 76);
+  pinMode(rele, OUTPUT);
   Serial.begin(9600);
   //A linha abaixo pode ser retirada apos setar a data e hora
   //SelecionaDataeHora();
@@ -81,7 +82,7 @@ void Mostrarelogio(int input)
   //Mostra a data no Serial Monitor
   if (input == 0) {
     //lcd.print("Data:");
-    lcd.setCursor(4, 0);
+    lcd.setCursor(2, 0);
     if (diadomes < 10) {
       lcd.print("0");
       lcd.print(diadomes);
@@ -113,9 +114,28 @@ void Mostrarelogio(int input)
       lcd.print(segundos);
     }
     else lcd.print(segundos);
+
+    lcd.setCursor(11, 0);
+    switch (diadasemana)
+    {
+      case 0: lcd.println("DOM  ");
+        break;
+      case 1: lcd.println("SEG  ");
+        break;
+      case 2: lcd.println("TER  ");
+        break;
+      case 3: lcd.println("QUA  ");
+        break;
+      case 4: lcd.println("QUI  ");
+        break;
+      case 5: lcd.println("SEX  ");
+        break;
+      case 6: lcd.println("SAB  ");
+    }
   } else {
     if (horas > 0 && horas < 7) {
-      hoursToON = 7 - horas;
+      digitalWrite(rele, LOW);
+      hoursToON = 6 - horas;
       minutsToON = 59 - minutos;
       secondsToON = 60 - segundos;
       lcd.setCursor(4, 0);
@@ -140,6 +160,7 @@ void Mostrarelogio(int input)
       else lcd.print(secondsToON);
     }
     if (horas > 7 && horas < 18) {
+      digitalWrite(rele, HIGH);
       hoursToOFF = 17 - horas;
       minutsToOFF = 59 - minutos;
       secondsToOFF = 60 - segundos;
@@ -165,6 +186,7 @@ void Mostrarelogio(int input)
       else lcd.print(secondsToOFF);
     }
     if (horas > 18 && horas < 24) {
+      digitalWrite(rele, LOW);
       hoursToON = (horas - 23) + 6;
       minutsToON = 59 - minutos;
       secondsToON = 60 - segundos;
@@ -189,22 +211,5 @@ void Mostrarelogio(int input)
       }
       else lcd.print(secondsToON);
     }
-  }
-  lcd.setCursor(11, 0);
-  switch (diadasemana)
-  {
-    case 0: lcd.println("DOM  ");
-      break;
-    case 1: lcd.println("SEG  ");
-      break;
-    case 2: lcd.println("TER  ");
-      break;
-    case 3: lcd.println("QUA  ");
-      break;
-    case 4: lcd.println("QUI  ");
-      break;
-    case 5: lcd.println("SEX  ");
-      break;
-    case 6: lcd.println("SAB  ");
   }
 }
