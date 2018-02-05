@@ -2,7 +2,7 @@
 #include <LiquidCrystal.h>
 #define DS1307_ADDRESS 0x68
 
-LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
+LiquidCrystal lcd(12, 11, 5, 4, 3, 6);
 byte zero = 0x00;
 
 void setup()
@@ -81,7 +81,7 @@ void Mostrarelogio(int input)
   //Mostra a data no Serial Monitor
   if (input == 0) {
     //lcd.print("Data:");
-    lcd.setCursor(2,0);
+    lcd.setCursor(4, 0);
     if (diadomes < 10) {
       lcd.print("0");
       lcd.print(diadomes);
@@ -113,23 +113,6 @@ void Mostrarelogio(int input)
       lcd.print(segundos);
     }
     else lcd.print(segundos);
-    lcd.setCursor(11, 0);
-    switch (diadasemana)
-    {
-      case 0: lcd.println("DOM  ");
-        break;
-      case 1: lcd.println("SEG  ");
-        break;
-      case 2: lcd.println("TER  ");
-        break;
-      case 3: lcd.println("QUA  ");
-        break;
-      case 4: lcd.println("QUI  ");
-        break;
-      case 5: lcd.println("SEX  ");
-        break;
-      case 6: lcd.println("SAB  ");
-    }
   } else {
     if (horas > 0 && horas < 7) {
       hoursToON = 7 - horas;
@@ -157,10 +140,10 @@ void Mostrarelogio(int input)
       else lcd.print(secondsToON);
     }
     if (horas > 7 && horas < 18) {
-      hoursToOFF = 18 - horas;
+      hoursToOFF = 17 - horas;
       minutsToOFF = 59 - minutos;
       secondsToOFF = 60 - segundos;
-      lcd.setCursor(1,0);
+      lcd.setCursor(1, 0);
       lcd.print("DESLIGAMENTO:");
       lcd.setCursor(4, 1);
       if (hoursToOFF < 10) {
@@ -182,12 +165,12 @@ void Mostrarelogio(int input)
       else lcd.print(secondsToOFF);
     }
     if (horas > 18 && horas < 24) {
-      hoursToON = horas + 7;
+      hoursToON = (horas - 23) + 6;
       minutsToON = 59 - minutos;
-      secondsToON = 60 - segundos;      
+      secondsToON = 60 - segundos;
       lcd.setCursor(4, 0);
       lcd.print("LIGA EM:");
-      lcd.setCursor(5, 1);
+      lcd.setCursor(4, 1);
       if (hoursToON < 10) {
         lcd.print("0");
         lcd.print(hoursToON);
@@ -206,5 +189,22 @@ void Mostrarelogio(int input)
       }
       else lcd.print(secondsToON);
     }
+  }
+  lcd.setCursor(11, 0);
+  switch (diadasemana)
+  {
+    case 0: lcd.println("DOM  ");
+      break;
+    case 1: lcd.println("SEG  ");
+      break;
+    case 2: lcd.println("TER  ");
+      break;
+    case 3: lcd.println("QUA  ");
+      break;
+    case 4: lcd.println("QUI  ");
+      break;
+    case 5: lcd.println("SEX  ");
+      break;
+    case 6: lcd.println("SAB  ");
   }
 }
